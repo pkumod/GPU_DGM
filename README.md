@@ -1,2 +1,2 @@
 # GPU_DGM
-Public codes for experiment paper on GPU-based dynamic graph management
+Public codes for VLDB submission titled "Towards Sufficient GPU-accelerated Dynamic Graph Management: Survey and Experiment"
