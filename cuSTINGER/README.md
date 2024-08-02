@@ -6,7 +6,9 @@ It is important that you clone the repo with all its dependencies using the **re
 git clone --recursive https://github.com/cuStinger/cuStinger.git
 ```
 
-To build the repo, proceed to ```cd``` in the clone directory and proceed as follows:
+To build the repo, download the required externals [here](https://drive.google.com/file/d/1mUGp7MzbWpwitSffCx075MUkuJYc9Qvw/view?usp=drive_link). Put the extracted content into ./externels/
+
+Then, proceed to ```cd``` in the clone directory and proceed as follows:
 ```
 mkdir build && cd build
 cmake ..
