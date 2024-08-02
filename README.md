@@ -1,1 +1,1 @@
-## Dynamic graph management on GPUs
+# Dynamic graph management on GPUs
