@@ -12,7 +12,7 @@
 
 Due to the file size limit of github, users can download preprocessed datasets from this [link](https://drive.google.com/drive/folders/1u99TgRftbVKoZD04f7kI5exvKuBWZ8gM?usp=drive_link), and put them into `dataset` folder. 
 
-The following are links to the public versions of datasets:
+All of the evaluated datasets are publicly available: road, Wiki, Patent, Pokec, LiveJournal, Stack, and Orkut are from [SNAP](https://snap.stanford.edu/data/index.html). Graph500 is produced by Kronecker Generator from the [Graph 500 benchmark](https://graph500.org/?page_id=12#tbl:classes). LDBC-SF30 and LDBC-SF100 are from [LDBC social network benchmark](https://ldbcouncil.org/benchmarks/snb-interactive/). uk-2005 is from [Laboratory for Web Algorithms](https://law.di.unimi.it/webdata/uk-2005/).
 
 
 If you want to run with your own datasets, you can use the following data format as input, which is similar to .txt format of [SNAP](https://snap.stanford.edu/data/index.html) datasets.
