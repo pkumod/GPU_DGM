@@ -1,6 +1,6 @@
 # Towards Sufficient GPU-accelerated Dynamic Graph Management: Survey and Experiment
 ------------
-+ This is the artifacts of our paper titled Towards Sufficient GPU-accelerated Dynamic Graph Management: Survey and Experiment for VLDB 2025.
+This is the artifact of our paper titled Towards Sufficient GPU-accelerated Dynamic Graph Management: Survey and Experiment for VLDB 2025.
 
 ## Environment Requirements
 
@@ -10,9 +10,9 @@
 
 ## Dataset
 
-Due to the file size limit of github, users can download preprocessed datasets from this [link](https://drive.google.com/drive/folders/1u99TgRftbVKoZD04f7kI5exvKuBWZ8gM?usp=drive_link), and put them into `dataset` folder. 
+Due to the file size limit of github, users can download preprocessed datasets from this [Google Drive link](https://drive.google.com/file/d/1WAZagwzHFvaRShfoiMT3TcwSjBMGsSjI/view?usp=sharing), and put unzipped files into `dataset` folder. 
 
-All of the evaluated datasets are publicly available: road, Wiki, Patent, Pokec, LiveJournal, Stack, and Orkut are from [SNAP](https://snap.stanford.edu/data/index.html). Graph500 is produced by Kronecker Generator from the [Graph 500 benchmark](https://graph500.org/?page_id=12#tbl:classes). LDBC-SF30 and LDBC-SF100 are from [LDBC social network benchmark](https://ldbcouncil.org/benchmarks/snb-interactive/). uk-2005 is from [Laboratory for Web Algorithms](https://law.di.unimi.it/webdata/uk-2005/).
+Here are some publicly available sources of our evaluated datasets: road, Wiki, Patent, Pokec, LiveJournal, Stack, and Orkut are from [SNAP](https://snap.stanford.edu/data/index.html). Graph500 is produced by Kronecker Generator from the [Graph 500 benchmark](https://graph500.org/?page_id=12#tbl:classes). LDBC-SF30 and LDBC-SF100 are from [LDBC social network benchmark](https://ldbcouncil.org/benchmarks/snb-interactive/). uk-2005 is from [Laboratory for Web Algorithms](https://law.di.unimi.it/webdata/uk-2005/).
 
 
 If you want to run with your own datasets, you can use the following data format as input, which is similar to .txt format of [SNAP](https://snap.stanford.edu/data/index.html) datasets.
@@ -25,7 +25,7 @@ vertex_number edge_number
 ......
 ```
 
-For a graph of N edges, the edgelist file contains N+1 lines. The first line indicates the number of vertices and edges. Each of the next N lines indicates an edge consisting of a source vertex ID and a destination vertex ID(first the source vertex, then the destination)(t1,t2,t3 in the example). 
+For a graph of N edges, the edgelist file contains N+1 lines. The first line indicates the number of vertices and edges. Each of the next N lines indicates an edge consisting of a source vertex ID and a destination vertex ID(first the source vertex, then the destination). 
 
 ## Code Structure
 The project directory is organized as follows:
@@ -40,7 +40,9 @@ The project directory is organized as follows:
 + `test`: The code/scripts for conducting experiments in our paper.
 
 ## Compile
-For cuSTINGER, faimgraph, gunrock, and hornet:
+Before compiling, please make sure you have modified the corresponding Makefiles of CMakeLists to specify the CUDA arch and gencode of your applied Nvidia GPU architecture. Besides, important parameters like the NVCC path and the included path should be specified.
+
+For cuSTINGER, faimgraph, gunrock, and hornet that use CMake:
 ```
 cd [path to a system]
 mkdir build && cd build
@@ -48,9 +50,40 @@ cmake ..
 make -j8
 ```
 
-For LPMA and GPMA:
+For LPMA and GPMA use simply Makefile:
 ```
 cd [path to a system]
 make -j8
 ```
+## Execute
+### Run update operations
+To run update tests, the following template of commands is used:
 
+```
+cd [path to binary files]
+./update [data_graph] [batch_size]
+```
+
+The first argument `data_path` indicates the location of the data graph file. The second argument `batch_size` instructs the system to generate update batches of this given fixed size, which should be between $10^4$ and $10^8$.
+
+For example, to run faimgraph's update on Orkut with a batch size of $10^5$:
+```
+cd ./faimgraph/build
+./update ../../dataset/orkut.txt 100000
+```
+
+### Run query primitives and analytic workloads
+To run query primitives and analytic workloads:
+```
+cd [path to binary files]
+./[operation_name] [data_graph] [options]
+```
+We implemented 5 query primitives and 3 analytic workloads based on aforementioned open-source versions of evaluated systems, including edge check (`findE`), neighborhood scan (`getNeighor`), 2-hop neighbor scan (`get2Hop`), cycle detection(`findCycle`), clique detection (`findClique`), breadth-first search(`bfs`), Pagerank (`pr`), and betweenness centrality(`bc`). Corresponding names of binary files are indicated in parentheses above.
+
+To run Pagerank, three arguments are required. (1) `damping_factor` is a probability of 0~1 (0.85 by default). (2) `max_iter` is the maximum number of iterations. (3) `tol` is the error tolerance used to check convergence.
+
+For example, to run PageRank with faimgraph on Orkut:
+```
+cd ./faimgraph/build
+./pr ../../dataset/orkut.txt 0.85 100 0.0000001
+```
