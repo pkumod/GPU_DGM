@@ -1,6 +1,5 @@
 # Towards Sufficient GPU-accelerated Dynamic Graph Management: Survey and Experiment
 ------------
-This is the artifact of our paper titled Towards Sufficient GPU-accelerated Dynamic Graph Management: Survey and Experiment for VLDB 2025.
 
 ## Environment Requirements
 
