@@ -1,6 +1,3 @@
-# Towards Sufficient GPU-accelerated Dynamic Graph Management: Survey and Experiment
-------------
-
 ## Environment Requirements
 
 - g++ 9.4 or higher (C++ 14 required)
